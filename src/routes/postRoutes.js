@@ -13,7 +13,23 @@ router.get('/getPosts', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({
-            message: "Something went wrong while fetching data: ",
+            message: "Something went wrong while fetching data",
+            error: error.message
+        })
+    }
+});
+
+//get a post
+
+router.get('/getPosts/:id', async (req, res) => {
+    try {
+        let id = req.params.id;
+        const post = await PostModel.findById(id).select('-__v');
+        res.status(200).json({ post });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Something went wrong while fetching data",
             error: error.message
         })
     }
